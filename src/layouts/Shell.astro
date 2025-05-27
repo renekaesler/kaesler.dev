@@ -1,0 +1,59 @@
+---
+import "#src/styles/base.css";
+import "#src/styles/layout.css";
+import "#src/styles/shame.css";
+
+import Header from "#components/Header.astro";
+import Footer from "#components/Footer.astro";
+
+interface Props {
+  brandAsHeading?: boolean;
+}
+
+const { brandAsHeading } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>kaesler.dev</title>
+
+    <script is:inline>
+      (root => {
+        function prefersColorScheme(mode) {
+          return matchMedia?.(`(prefers-color-scheme: ${mode})`)?.matches;
+        }
+
+        function preferredColorScheme(defaultColorScheme = 'light') {
+          return prefersColorScheme('light')
+            ? 'light'
+            : prefersColorScheme('dark')
+            ? 'dark'
+            : defaultColorScheme;
+        }
+
+        const colorScheme = localStorage.getItem('color-scheme');
+        root.dataset.colorScheme = colorScheme ?? preferredColorScheme('dark');
+      })(document.documentElement);
+    </script>
+  </head>
+  <body>
+    <Header brandAsHeading={brandAsHeading} />
+
+    <main>
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+
+<style>
+  main { margin-block: var(--space-l); }
+</style>
+

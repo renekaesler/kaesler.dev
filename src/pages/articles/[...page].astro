@@ -1,0 +1,27 @@
+---
+import type { GetStaticPathsOptions } from "astro";
+import { getCollection } from "astro:content";
+import { orderBy } from "lodash-es";
+
+import ArticleListing from "#components/ArticleListing.astro";
+import Pagination from "#components/Pagination.astro";
+import Layout from "#layouts/Shell.astro";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const articles = orderBy(await getCollection("articles"), 'data.published', 'desc')
+
+  return paginate(articles, { pageSize: 10 });
+}
+
+const { page } = Astro.props;
+---
+
+<Layout>
+  <div class="container rhythmic">
+    <h1>Articles</h1>
+
+    <div class="vstack" style="gap: var(--space-l);">
+      <ArticleListing articles={page.data} />
+      <Pagination page={page} />
+    </div>
+</Layout>

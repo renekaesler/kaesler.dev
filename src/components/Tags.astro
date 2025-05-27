@@ -1,0 +1,24 @@
+---
+import { kebabCase } from "lodash-es";
+
+interface Props {
+  tags: string[];
+}
+
+const { tags } = Astro.props;
+---
+
+<menu>
+  { tags.map(tag => (
+    <li>
+      <a href={`/tags/${kebabCase(tag)}`}>#{tag}</a>
+    </li>
+  )) }
+</menu>
+
+<style>
+  menu {
+    flex-wrap: wrap;
+    column-gap: var(--space-m);
+  }
+</style>

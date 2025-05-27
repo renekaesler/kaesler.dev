@@ -1,0 +1,23 @@
+.rhythmic {
+  max-width: var(--max-content-width);
+
+  * + :where(p, pre, blockquote, menu, ul, dl, table, details) { margin-block-start: 1em; }
+  * + :where(h1, h2, h3, h4, h5, h6, hgroup, figure) { margin-block-start: 1lh; }
+
+  :where(h1, h2, h3, h4, h5, h6) + * { margin-block-start: 1em; }
+
+  hgroup * { margin-block: 0; }
+
+  figure + * { margin-block-start: 1lh; }
+
+  details + details { margin-block-start: .2lh; }
+
+  canvas, img, video {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+.unrhythmic { 
+  * { margin-block: 0; }
+}

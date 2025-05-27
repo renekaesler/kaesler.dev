@@ -1,0 +1,28 @@
+---
+import Github from '#src/assets/icons/github.svg';
+import Linkedin from '#src/assets/icons/linkedin.svg';
+import Npm from '#src/assets/icons/npm.svg';
+---
+<footer class="container">
+  <a href="https://www.linkedin.com/in/renekaesler" target="_blank"><Linkedin /></a>
+  <a href="https://github.com/renekaesler" target="_blank"><Github /></a>
+  <a href="https://www.npmjs.com/~renekaesler" target="_blank"><Npm /></a>
+</footer>
+
+<style>
+  a:not(:hover) { color: var(--text); }
+
+  footer {
+    display: flex;
+    margin-block: var(--space-xl);
+    justify-content: center;
+    gap: var(--space-l);
+  }
+
+  svg { 
+    height: 1lh;
+    width: 1lh;
+    fill: currentColor;
+    vertical-align: middle;
+  }
+</style>

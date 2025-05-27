@@ -1,0 +1,33 @@
+---
+import DarkmodeToggle from "./DarkmodeToggle.astro";
+
+interface Props {
+  brandAsHeading?: boolean;
+}
+
+const { brandAsHeading = false } = Astro.props;
+
+const Brand = brandAsHeading ? 'h1' : 'span';
+---
+
+<header class="container">
+  <Brand class="h3"><a class="raw" href="/">kaesler.dev</a></Brand>
+  <DarkmodeToggle />
+</header>
+
+<style>
+  header { 
+    display: flex;
+    margin-top: 1lh;  
+    font-size:  var(--step-2); 
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  a {
+    font-weight: bold;
+    text-transform: uppercase;
+
+    &:hover { color: var(--accent); }
+  }
+</style>

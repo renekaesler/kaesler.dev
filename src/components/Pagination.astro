@@ -1,0 +1,46 @@
+---
+import type { Page } from "astro";
+
+interface Props {
+  page: Page;
+}
+
+const { page } = Astro.props;
+---
+
+{
+  page.lastPage > 1 && (
+    <nav>
+      <a class="prev" href={page.url.prev}>
+        Prev
+      </a>
+
+      <span>
+        {page.currentPage} / {page.lastPage}
+      </span>
+
+      <a class="next" href={page.url.next}>
+        Next
+      </a>
+    </nav>
+  )
+}
+
+<style>
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-m);
+  }
+
+  a:not([href]) {
+    color: gray;
+  }
+  .prev::before {
+    content: "🡠 ";
+  }
+
+  .next::after {
+    content: " 🡢";
+  }
+</style>

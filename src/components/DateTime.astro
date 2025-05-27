@@ -1,0 +1,21 @@
+---
+interface Props {
+  date: Date;
+}
+
+function formatDate(date: Date) {
+  return date.toLocaleString(Astro.currentLocale, {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+function formatDateTime(date: Date) {
+  return date.toISOString().split("T")[0];
+}
+
+const { date } = Astro.props;
+---
+
+<time datetime={formatDateTime(date)}>{formatDate(date)}</time>

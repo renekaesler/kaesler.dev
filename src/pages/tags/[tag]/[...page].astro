@@ -1,0 +1,49 @@
+---
+import type { GetStaticPathsOptions } from "astro";
+import type { CollectionEntry } from "astro:content";
+
+import { getCollection } from "astro:content";
+import { transform, flatMap, kebabCase, orderBy } from "lodash-es";
+
+import Layout from "#layouts/Shell.astro";
+import ArticleListing from "#components/ArticleListing.astro";
+import Pagination from "#components/Pagination.astro";
+
+type GroupedArticles = {
+  [key: string]: CollectionEntry<"articles">[];
+};
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const grouped = transform(
+    orderBy(await getCollection("articles"), 'data.published', 'desc'),
+    (dict, article) => {
+      article.data.tags.map(tag => {
+        const articles = dict[tag] || [];
+        articles.push(article);
+        dict[tag] = articles;
+      });
+    },
+    {} as GroupedArticles,
+  );
+
+  return flatMap(grouped, (articles, tag) =>
+    paginate(articles, {
+      params: { tag: kebabCase(tag) },
+      props: { tagLabel: tag },
+      pageSize: 10,
+    }),
+  );
+}
+
+const { page, tagLabel } = Astro.props;
+---
+
+<Layout>
+  <div class="container rhythmic">
+    <h1>#{tagLabel}</h1>
+
+    <div class="vstack" style="gap: var(--space-l);">
+      <ArticleListing articles={page.data} />
+      <Pagination page={page} />
+    </div>
+</Layout>

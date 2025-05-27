@@ -1,0 +1,94 @@
+---
+import { getCollection, render } from "astro:content";
+
+import Tags from "#components/Tags.astro";
+import Layout from "#layouts/Shell.astro";
+import DateTime from "#components/DateTime.astro";
+import Toc from "#components/Toc.astro";
+
+export async function getStaticPaths() {
+  const articles = await getCollection("articles");
+
+  return articles.map(article => ({
+    params: { id: article.id },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+---
+
+<script>
+  import "#src/custom-elements/x-content.js";
+  import "#src/custom-elements/x-sticky.js";
+</script>
+
+<Layout>
+  <header class="container">
+    <div>
+      <!-- <a class="back-link" href="/articles">All Articles</a> -->
+      <h1>{article.data.title}</h1>
+
+      <div class="meta">
+        Published on <DateTime date={article.data.published} />
+      </div>
+    </div>
+
+    <nav class="categories">
+      <Tags tags={article.data.tags} />
+    </nav>
+  </header>
+
+  <div class="grid">
+    <x-sticky>
+      <Toc />
+    </x-sticky>
+
+    <x-content name="content" class="container rhythmic">
+      <Content />
+    </x-content>
+  </div>
+</Layout>
+
+<style>
+  .back-link {
+    font-weight: bolder;
+    
+    &::before { content: "🡠 "; }
+  }
+
+  .meta { font-size: smaller; }
+
+  .categories, .grid {
+    margin-block-start: 1lh;
+    row-gap: 1lh;
+  }
+
+  x-sticky { padding-inline: var(--guard); }
+
+  @media screen and (width < 1100px) {
+    x-sticky[stuck] {
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+      background-color: var(--level-1);
+    }
+  }
+
+  @media screen and (width >= 1100px) {
+    .grid { 
+      margin-inline: var(--guard);
+      grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); 
+    }
+
+    x-sticky {
+      --top: 1lh;
+      grid-area: 1 / 2;
+      padding-inline: 0;
+    }
+
+    x-content { 
+      grid-area: 1 / 1;
+      margin-inline: 0;
+    }
+  }
+</style>
