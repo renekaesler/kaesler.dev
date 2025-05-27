@@ -1,5 +1,5 @@
 ---
-published: 2025-05-24
+published: 2025-05-28
 title: A Modern Approach of Implementing Dark Mode
 description: |
   Modern browsers finally play nice with dark mode out of the box. So I think it’s time to bring that sleek, eye-friendly aesthetic to the web!
