@@ -10,7 +10,7 @@ tags:
 
 I’m a total dark mode fan. It’s the first thing I switch on whenever I get a new device. Modern browsers finally play nice with dark mode out of the box. So I think it’s time to bring that sleek, eye-friendly aesthetic to the web!
 
-![Dark Mode with View Transition](dark-mode-demo.jpg)
+![Dark Mode with View Transition](preview.jpg)
 
 [Demo](https://renekaesler.github.io/demo-dark-mode-transition) |
 [Code](https://github.com/renekaesler/demo-dark-mode-transition)
