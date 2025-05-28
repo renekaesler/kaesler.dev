@@ -1,15 +1,16 @@
 ---
 import { getCollection } from "astro:content";
-import { kebabCase, uniq } from "lodash-es";
+import { uniq } from "lodash-es";
 
-import Layout from "#layouts/Shell.astro";
+import { SITE } from "#config";
 import Tags from "#components/Tags.astro";
+import Layout from "#layouts/Shell.astro";
 
 const articles = await getCollection("articles");
 const tags = uniq(articles.flatMap(article => article.data.tags));
 ---
 
-<Layout>
+<Layout title={`Tags | ${SITE.title}`}>
   <div class="container rhythmic">
     <h1>Tags</h1>
 

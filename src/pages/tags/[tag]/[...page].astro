@@ -5,9 +5,10 @@ import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import { transform, flatMap, kebabCase, orderBy } from "lodash-es";
 
-import Layout from "#layouts/Shell.astro";
+import { SITE } from "#config";
 import ArticleListing from "#components/ArticleListing.astro";
 import Pagination from "#components/Pagination.astro";
+import Layout from "#layouts/Shell.astro";
 
 type GroupedArticles = {
   [key: string]: CollectionEntry<"articles">[];
@@ -38,7 +39,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 const { page, tagLabel } = Astro.props;
 ---
 
-<Layout>
+<Layout title={`#${tagLabel} | ${SITE.title}`}>
   <div class="container rhythmic">
     <h1>#{tagLabel}</h1>
 
