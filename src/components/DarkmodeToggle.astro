@@ -41,41 +41,15 @@
     localStorage.setItem('color-scheme', root.dataset.colorScheme);
   }
 
-  function animate(x, y) {
-    const radius = Math.hypot(
-      Math.max(x, innerWidth - x),
-      Math.max(y, innerHeight - y)
-    );
-
-    root.animate({
-      clipPath: [
-        `circle(0 at ${x}px ${y}px)`,
-        `circle(${radius}px at ${x}px ${y}px)`,
-      ],
-    }, {
-      duration: 400,
-      easing: 'cubic-bezier(1, 0, 1, 1)',
-      fill: 'both',
-      pseudoElement: '::view-transition-new(toggle-color-scheme)',
-    });
-  }
-
   btn.addEventListener('click', e => {
     if(!document.startViewTransition) return toggleColorScheme();
 
     root.style.viewTransitionName = 'toggle-color-scheme';
 
-    const { ready, finished } = document.startViewTransition(toggleColorScheme);
-
-    ready.then(() => animate(e.clientX, e.clientY));
+    const { finished } = document.startViewTransition(toggleColorScheme);
     finished.finally(() => { root.style.viewTransitionName = ''; });
   });
 </script>
-
-<style is:global>
-  ::view-transition-new(toggle-color-scheme),
-  ::view-transition-old(toggle-color-scheme) { animation: none; }
-</style>
 
 <style>
   button {

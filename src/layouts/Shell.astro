@@ -52,6 +52,18 @@ const { brandAsHeading } = Astro.props;
   </body>
 </html>
 
+<style is:global>
+  ::view-transition-old(toggle-color-scheme) { animation: none; }
+
+  ::view-transition-new(toggle-color-scheme) {
+    animation: 400ms cubic-bezier(1, 0, 1, 1) both reveal;
+  }
+
+  @keyframes reveal {
+    from { clip-path: circle(0 at 100% 0); }
+    to { clip-path: circle(calc(max(100vw, 100vh) * sqrt(2)) at 100% 0); }
+  }
+</style>
 
 <style>
   main { margin-block: var(--space-l); }
