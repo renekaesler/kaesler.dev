@@ -11,7 +11,7 @@ function formatDate(date: Date) {
   });
 }
 
-function formatDateTime(date: Date) {
+export function formatDateTime(date: Date) {
   return date.toISOString().split("T")[0];
 }
 

@@ -6,26 +6,35 @@ import "#src/styles/shame.css";
 import { SITE } from "#config";
 import Header from "#components/Header.astro";
 import Footer from "#components/Footer.astro";
+import { formatDateTime } from "#components/DateTime.astro";
 
 interface Props {
   brandAsHeading?: boolean;
   canonical?: string
   title?: string
-  author?: string
   description?: string
+  author?: string
+  socialImage?: string
+  type?: string
+  published?: Date
+  modified?: Date
 }
 
 const { 
   brandAsHeading,
+  canonical = new URL(Astro.url.pathname, Astro.url),
   title = SITE.title,
   description = SITE.description,
   author = SITE.author,
-  canonical = new URL(Astro.url.pathname, Astro.url)
+  socialImage = new URL('/social-image.jpg', Astro.url),
+  type = 'website',
+  published,
+  modified
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang={SITE.lang}>
+<html lang={SITE.lang} prefix="og: https://ogp.me/ns# article: https://ogp.me/ns/article#">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -38,6 +47,22 @@ const {
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+
+    { published && (
+        <meta property="article:published_time" content={formatDateTime(published)} />
+    )}
+
+    { modified && (
+      <meta property="article:modified_time" content={formatDateTime(modified)} />
+    )}
 
     <title>{title}</title>
 

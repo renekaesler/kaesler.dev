@@ -18,7 +18,16 @@ export async function getStaticPaths() {
 
 const { article } = Astro.props;
 const { Content } = await render(article);
-const { title, description } = article.data
+const { title, description, socialImage, published, modified } = article.data
+
+const meta = {
+  title,
+  description,
+  socialImage: socialImage?.src,
+  type: 'article',
+  published,
+  modified
+}
 ---
 
 <script>
@@ -26,14 +35,14 @@ const { title, description } = article.data
   import "#src/custom-elements/x-sticky.js";
 </script>
 
-<Layout {...{ title, description }}>
+<Layout {...meta}>
   <header class="container">
     <div>
       <!-- <a class="back-link" href="/articles">All Articles</a> -->
       <h1>{article.data.title}</h1>
 
       <div class="meta">
-        Published on <DateTime date={article.data.published} />
+        Published on <DateTime date={published} />
       </div>
     </div>
 
