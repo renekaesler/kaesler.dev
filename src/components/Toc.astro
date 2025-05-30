@@ -1,9 +1,5 @@
 <x-toc>
-  <div class="summary">
-    <span class="title">Table of Contents</span>
-    <span class="section"></span>
-  </div>
-
+  <div class="summary" data-title="Table of Contents">Table of Contents</div>
   <div class="list"></div>
 </x-toc>
 
@@ -20,10 +16,11 @@
       XContent.subscribe('content', ({ target, changes }) => {
         if (changes.includes('outline')) {
           list.innerHTML = this.createOutline(target.outline());
+          target.activeSections().then(h => this.highlight(h));
         }
 
-        if (changes.includes('visibility')) {
-          target.activeHeadings().then(h => this.highlight(h));
+        if (changes.includes('activity')) {
+          target.activeSections().then(h => this.highlight(h));
         }
       })
     }
@@ -42,15 +39,16 @@
     }
 
     highlight(headlines) {
-      if(!headlines[0]) return;
 
-      const summary = this.querySelector('.section');
-      summary.innerText = headlines[0].innerText;
+      const summary = this.querySelector('.summary');
+      summary.innerText = headlines.length 
+        ? headlines.at(-1).innerText
+        : summary.dataset.title
 
       this.querySelectorAll('a').forEach(a => {
         const id = a.getAttribute('href').substring(1);
 
-        const method = headlines[0].id === id
+        const method = headlines?.[0]?.id === id
           ? 'add'
           : 'remove';
 
