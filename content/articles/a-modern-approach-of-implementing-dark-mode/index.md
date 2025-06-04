@@ -7,6 +7,7 @@ description: |
 tags:
   - css
   - javascript
+  - web
 ---
 
 I’m a total dark mode fan. It’s the first thing I switch on whenever I get a new device. Modern browsers finally play nice with dark mode out of the box. So I think it’s time to bring that sleek, eye-friendly aesthetic to the web!

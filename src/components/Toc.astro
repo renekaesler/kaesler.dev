@@ -16,12 +16,9 @@
       XContent.subscribe('content', ({ target, changes }) => {
         if (changes.includes('outline')) {
           list.innerHTML = this.createOutline(target.outline());
-          target.activeSections().then(h => this.highlight(h));
         }
 
-        if (changes.includes('activity')) {
-          target.activeSections().then(h => this.highlight(h));
-        }
+        target.activeSections().then(h => this.highlight(h));
       })
     }
 
@@ -39,7 +36,6 @@
     }
 
     highlight(headlines) {
-
       const summary = this.querySelector('.summary');
       summary.innerText = headlines.length 
         ? headlines.at(-1).innerText
